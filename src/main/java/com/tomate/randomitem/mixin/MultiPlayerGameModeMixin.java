@@ -3,6 +3,7 @@ package com.tomate.randomitem.mixin;
 import com.tomate.randomitem.RandomItem;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,9 +23,9 @@ public abstract class MultiPlayerGameModeMixin {
     @Shadow
     public abstract void handleInventoryMouseClick(int i, int j, int k, ClickType clickType, Player player);
 
-    @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;startPrediction(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/multiplayer/prediction/PredictiveAction;)V"))
+    @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;startPrediction(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/multiplayer/prediction/PredictiveAction;)V", shift = At.Shift.AFTER))
     void useItemOn(LocalPlayer localPlayer, InteractionHand interactionHand, BlockHitResult blockHitResult, CallbackInfoReturnable<InteractionResult> cir) {
-        if(!RandomItem.enabled)
+        if(!RandomItem.enabled || interactionHand != InteractionHand.OFF_HAND)
             return;
 
         var nextItem = weightedRandomSelection(localPlayer.getInventory(), RandomItem.min, RandomItem.max);
