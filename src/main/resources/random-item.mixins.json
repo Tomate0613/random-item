@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.tomate.randomitem.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MultiPlayerGameModeMixin",
+    "AbstractContainerScreenMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
