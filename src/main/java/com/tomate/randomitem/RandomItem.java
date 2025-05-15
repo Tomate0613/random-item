@@ -17,7 +17,7 @@ public class RandomItem implements ModInitializer {
                 enabled = !enabled;
 
                 if(client.player != null) {
-                    client.player.sendSystemMessage(Component.literal("RandomItem is now " + (enabled ? "enabled" : "disabled")));
+                    client.player.displayClientMessage(Component.literal("RandomItem is now " + (enabled ? "enabled" : "disabled")), false);
                 }
             }
         });
